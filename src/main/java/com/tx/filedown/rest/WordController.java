@@ -64,6 +64,7 @@ public class WordController {
         params.put("Action", "UpdateAsrVocab");
         params.put("Version", "2019-06-14");
         params.put("Name", "cus01");
+        params.put("VocabId", canshu.get("vocabid"));
         //方式1:批量
         /**
          * 转业干部|10

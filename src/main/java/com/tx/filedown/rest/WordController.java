@@ -39,7 +39,10 @@ public class WordController {
         //byte[] bstr = str.getBytes();
         return Base64.getEncoder().encodeToString(bstr);
     }
-
+    @PostMapping("/base64")
+    public String baseGet(@RequestBody Map<String, String> canshu) throws Exception {
+        return strEncode(canshu.get("list"));
+    }
 
     @PostMapping("/add")
     public String queryMachineCheckByPage(@RequestBody Map<String, String> canshu) throws Exception {
@@ -59,7 +62,7 @@ public class WordController {
          * 转业|10
          * 专业干部|1
          */
-        params.put("WordWeightStr", strEncode(canshu.get("list")));
+        params.put("WordWeightStr", canshu.get("list"));
 
         String str2sign = getStringToSign("GET", "asr.tencentcloudapi.com", params);
         String signature = sign(str2sign, "rV3SecNvGOI0iHdmhPt9Tkw4871rZ9cx", "HmacSHA1");
@@ -87,7 +90,7 @@ public class WordController {
          * 转业|10
          * 专业干部|1
          */
-        params.put("WordWeightStr", strEncode(canshu.get("list")));
+        params.put("WordWeightStr", canshu.get("list"));
 
         String str2sign = getStringToSign("GET", "asr.tencentcloudapi.com", params);
         String signature = sign(str2sign, "rV3SecNvGOI0iHdmhPt9Tkw4871rZ9cx", "HmacSHA1");

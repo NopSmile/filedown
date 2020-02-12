@@ -52,6 +52,32 @@ public class WordController {
         return getUrl(params);
     }
 
+    @PostMapping("/update")
+    public String UpdateAsrVocab(@RequestBody Map<String, String> canshu) throws Exception {
+
+        TreeMap<String, Object> params = new TreeMap<String, Object>();
+        params.put("Nonce", new Random().nextInt(java.lang.Integer.MAX_VALUE));
+
+        params.put("Timestamp", System.currentTimeMillis() / 1000);
+        params.put("Region", "ap-beijing");
+        params.put("SecretId", "AKIDNbdS3QOWFnYEh258sSt9HCuPhleJt6B3");
+        params.put("Action", "UpdateAsrVocab");
+        params.put("Version", "2019-06-14");
+        params.put("Name", "cus01");
+        //方式1:批量
+        /**
+         * 转业干部|10
+         * 转业|10
+         * 专业干部|1
+         */
+        params.put("WordWeightStr", canshu.get("list"));
+
+        String str2sign = getStringToSign("GET", "asr.tencentcloudapi.com", params);
+        String signature = sign(str2sign, "rV3SecNvGOI0iHdmhPt9Tkw4871rZ9cx", "HmacSHA1");
+        params.put("Signature", signature); // 公共参数
+
+        return getUrl(params);
+    }
 
     @RequestMapping("/get/{funCode}")
     public String GetAsrVocab(@PathVariable("funCode") String funCode) throws Exception {

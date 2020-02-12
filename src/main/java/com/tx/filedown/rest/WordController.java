@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Base64;
 import java.util.Map;
 
 import java.io.UnsupportedEncodingException;
@@ -24,6 +25,21 @@ import javax.xml.bind.DatatypeConverter;
 @Slf4j
 @RequestMapping(value = "/word")
 public class WordController {
+
+
+    /**
+     * base64加密
+     */
+    public static String strEncode(String str) {
+        byte[] bstr = new byte[0]; //改成默认字符集
+        try {
+            bstr = str.getBytes("utf-8");
+        } catch (UnsupportedEncodingException e) {
+        }
+        //byte[] bstr = str.getBytes();
+        return Base64.getEncoder().encodeToString(bstr);
+    }
+
 
     @PostMapping("/add")
     public String queryMachineCheckByPage(@RequestBody Map<String, String> canshu) throws Exception {
@@ -43,7 +59,7 @@ public class WordController {
          * 转业|10
          * 专业干部|1
          */
-        params.put("WordWeightStr", canshu.get("list"));
+        params.put("WordWeightStr", strEncode(canshu.get("list")));
 
         String str2sign = getStringToSign("GET", "asr.tencentcloudapi.com", params);
         String signature = sign(str2sign, "rV3SecNvGOI0iHdmhPt9Tkw4871rZ9cx", "HmacSHA1");
@@ -71,7 +87,7 @@ public class WordController {
          * 转业|10
          * 专业干部|1
          */
-        params.put("WordWeightStr", canshu.get("list"));
+        params.put("WordWeightStr", strEncode(canshu.get("list")));
 
         String str2sign = getStringToSign("GET", "asr.tencentcloudapi.com", params);
         String signature = sign(str2sign, "rV3SecNvGOI0iHdmhPt9Tkw4871rZ9cx", "HmacSHA1");

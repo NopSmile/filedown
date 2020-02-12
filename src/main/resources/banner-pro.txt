@@ -1,0 +1,23 @@
+${AnsiColor.BRIGHT_YELLOW}
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@OO[OOO@@@@@@@@@@@OO[OO@@@@@@O
+@@@@@@OO,OOO^\@@@@@@@@@@O,OOO`OO@@@@@
+@@@@@@OO`OOO`/OOOOOOOOO@O,OOO`OO@@@@@
+@@@@@@@@@OOOOOOOO/[[\OOOOOOOOO@@@@@@@
+@@@@@@@@@OOO[`     .     [OOOO@@@@@@@
+@@@@@@@OO`                  ,O@@@@@@@
+@@@@OOOOO                    OOOOO@@@
+@@@@O/  [O                  O[` \O@@@
+@@OO^       .                    =@@@
+@@OO    .....            .....    O@O
+@@O^     .....           ....     =O@
+@@@^       .              .       =O@
+@@O^                              =OO
+@@OO@@@@@OOOOO@@@@@@@@OOOOOOOOOO@@OO@
+${AnsiColor.BRIGHT_RED}
+Application Version: ${application.version}${application.formatted-version}
+Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>上传成功</title>
+    <style>
+        body{ margin:0; height:100%}
+        html{ height:100%} /*兼容firefox的div高度100%*/
+        first{ position:absolute; top:0; left:0; width:50%; height:100%; }
+        second{ margin-left:200px; height:100%; }
+            </style>
+</head>
+<body>
+<div id="left" style="float:left ; width:50%; height:100%;">
+<div th:if="${fileName}">
+    <h2 th:text="|http://39.105.47.147:52111/ocrdata/${fileName} 上传成功,存储路径为 :${path}|"> </h2>
+    <img th:src="@{${imgpath}}" alt="图片">
+    <br/>
+
+</div>
+</div>
+<div id="right" style="float:left ; width:50%; height:100%;"><h5 th:text="|图片解析结果为 :${result}|"> </h5> </div>
+</body>
+</html>

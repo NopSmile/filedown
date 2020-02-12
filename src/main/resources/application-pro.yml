@@ -1,0 +1,36 @@
+# Logger Config
+logging:
+  config: classpath:logback.xml
+  level:
+    com.baomidou.mybatisplus.samples: debug
+    org.springframework.cloud: info
+
+spring:
+  banner:
+    location: classpath:banner-pro.txt
+  application:
+    name: itcc-filedown
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  #test
+  thymeleaf:
+    cache: false # 关闭页面缓存
+    encoding: UTF-8 # 模板编码
+    prefix: classpath:/templates/ # 页面映射路径
+    suffix: .html # 试图后的后缀
+#test
+
+server:
+  port: 52118
+
+file:
+  upload:
+    path: /asrdata/ocrdata/
+
+ocr: 0

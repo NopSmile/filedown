@@ -24,7 +24,7 @@ public class FileController {
         System.out.println("filePath--->"+filePath);
         try {
             if(new File(filePath+file.getOriginalFilename()).exists()){
-                return "file exists";
+                return "file exists,uploading success";
             }else{
                 uploadFile(file.getBytes(), filePath, file.getOriginalFilename());
             }

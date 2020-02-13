@@ -23,7 +23,11 @@ public class FileController {
                                           HttpServletRequest request) {
         System.out.println("filePath--->"+filePath);
         try {
-            uploadFile(file.getBytes(), filePath, file.getOriginalFilename());
+            if(new File(filePath+file.getOriginalFilename()).exists()){
+                return "file exists";
+            }else{
+                uploadFile(file.getBytes(), filePath, file.getOriginalFilename());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("文件上传失败!");

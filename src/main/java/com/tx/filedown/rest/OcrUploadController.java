@@ -72,7 +72,7 @@ public class OcrUploadController {
 
                 model.addAttribute("fileName",file.getOriginalFilename());
                 model.addAttribute("path",filePath);
-                model.addAttribute("imgpath","http://"+ InetAddress.getLocalHost().getHostAddress()+":52118/pic/"+file.getOriginalFilename());
+                model.addAttribute("imgpath","http://39.105.47.147:52118/pic/"+file.getOriginalFilename());
                 model.addAttribute("result",GeneralBasicOCRRequest.toJsonString(resp));
             } catch (TencentCloudSDKException e) {
                 System.out.println(e.toString());
@@ -80,10 +80,10 @@ public class OcrUploadController {
         }else{
             model.addAttribute("fileName",file.getOriginalFilename());
             model.addAttribute("path",filePath);
-            model.addAttribute("imgpath","http://"+ InetAddress.getLocalHost().getHostAddress()+":52118/pic/"+file.getOriginalFilename());
+            model.addAttribute("imgpath","http://39.105.47.147:52118/pic/"+file.getOriginalFilename());
             model.addAttribute("result","没有开启转换ocr 请开启后在测试");
         }
-        System.out.println(filePath+file.getOriginalFilename());
+        System.out.println(filePath+file.getOriginalFilename()+InetAddress.getLocalHost());
         return "index";
     }
 

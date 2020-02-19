@@ -34,21 +34,26 @@ public class OcrUploadController {
 
     @GetMapping("/")
     public String uploladPage(){
-        return "Page";
+        return "index";
     }
 
     @PostMapping("/testuploading")
     public String uploading(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) {
         ///public MapRestResponse uploading(@RequestParam(value="filePath") String filePath, @RequestParam("file") MultipartFile file,HttpServletRequest request) {
-        System.out.println("filePath--->"+filePath);
         try {
-            uploadFile(file.getBytes(), filePath, file.getOriginalFilename());
+
+            if(new File(filePath+file.getOriginalFilename()).exists()){
+                System.out.println("file exists,uploading success");
+                return "index";
+            }else{
+                uploadFile(file.getBytes(), filePath, file.getOriginalFilename());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("文件上传失败!");
             return "Page";
         }
-        System.out.println("文件上传成功!");
+        System.out.println("文件名 "+file.getOriginalFilename()+" 文件上传 "+filePath+" 成功!");
         if(1==ocr){
             try{
 
@@ -83,9 +88,7 @@ public class OcrUploadController {
             model.addAttribute("result","没有开启转换ocr 请开启后在测试");
         }
 
-
-
-        return "ok";
+        return "index";
     }
 
 

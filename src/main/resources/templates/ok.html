@@ -1,24 +1,75 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>上传成功</title>
-    <style>
-        body{ margin:0; height:100%}
-        html{ height:100%} /*兼容firefox的div高度100%*/
-        first{ position:absolute; top:0; left:0; width:50%; height:100%; }
-        second{ margin-left:200px; height:100%; }
-            </style>
-</head>
-<body>
-<div id="left" style="float:left ; width:50%; height:100%;">
-<div th:if="${fileName}">
-    <h2 th:text="|http://39.105.47.147:52111/ocrdata/${fileName} 上传成功,存储路径为 :${path}|"> </h2>
-    <img th:src="@{${imgpath}}" alt="图片">
-    <br/>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+    <title>在线文字识别，文字提取，OCR服务</title>
+    <link rel="stylesheet" type="text/css" href="./ocr/lazy.css">
+</head>
+<body style="">
+<div class="row">
+    <div class="span12 whitebg">
+        <h1 class="slogon">
+            DEMO
+        </h1>
+    </div>
 </div>
+<form action="../testuploading" class="form-horizontal" enctype="multipart/form-data" id="ocrForm" method="post" novalidate="novalidate">
+    <!--<input name="__RequestVerificationToken" type="hidden" value="unknown">-->
+    <fieldset>
+        <div class="row">
+            <div class="span12">
+                <h3 class="headline">
+                    <span>在线文字识别，OCR服务<i class="mobileHidden">－演示</i></span>
+                </h3>
+            </div>
+
+            <div class="span12">
+                <div class="span4">
+                    <p class="diyLabel">上传文件 ( 图片/word/pdf )</p>
+                </div>
+                <div class="span8">
+                    <input type="file" name="file" id="imageFile" class="form-control choose" accept="*">
+                </div>
+            </div>
+            <div class="span12 thirdrow">
+                <div class="span4">
+                    <p class="diyLabel">选择识别语音</p>
+                </div>
+                <div class="span4">
+                    <select id="ocrLanguage" class="form-control valid selection">
+                        <option value="chs" selected="selected">中文（简体）</option>
+                    </select>
+                </div>
+
+                <!--<div class="span2" id="btnStartOCR"><a class="btn btn-large btn-green-light" onclick="StartOCR()">开始</a></div>-->
+                <div class="span2" id="btnStartOCR"><input type="submit" value="上传" class="btn btn-large btn-green-light"></div>
+                <div class="span2" id="btnCancel"><a class="btn btn-large btn-green-light" onclick="Clear()">重置</a></div>
+            </div>
+
+            <div style=" clear:both; margin-top:10px !important;"></div>
+
+            <div class="span12">
+                <div id="imagePanel" class="span5 borderspanblue">
+                    <div class="imagearea">
+                        <h3>图片预览</h3>
+                    </div>
+                    <div class="panel-body">
+                        <!--<img th:src="@{${imgpath}}" alt="图片">-->
+                        <img id="previewImage" class="img-responsive" style="float:left; height:80%; width:95%;" alt="图片">
+                    </div>
+                </div>
+
+
+                <div id="resultPanel" class="span5 borderspan" >
+                    <div class="resultarea">
+                        <h3>识别结果</h3>
+                    </div>
+                    <div>
+                        <textarea class="form-control" cols="20" id="txtAreaParsedResult" name="parsedResult" rows="2" style="height:102px; width:85%; margin-left:28px;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>
 </div>
-<div id="right" style="float:left ; width:50%; height:100%;"><h5 th:text="|图片解析结果为 :${result}|"> </h5> </div>
-</body>
-</html>
+</body></html>

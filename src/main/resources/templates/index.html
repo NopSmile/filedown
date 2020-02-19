@@ -19,7 +19,7 @@
 					</h1>
 					</div>
 				</div>
-		<form action="../testuploading" class="form-horizontal" enctype="multipart/form-data" id="ocrForm" method="post" novalidate="novalidate">
+		<form action="../" class="form-horizontal" enctype="multipart/form-data" id="ocrForm" method="post" novalidate="novalidate">
 			<!--<input name="__RequestVerificationToken" type="hidden" value="unknown">-->
 			<fieldset>
         <div class="row">
@@ -49,7 +49,7 @@
 
             <!--<div class="span2" id="btnStartOCR"><a class="btn btn-large btn-green-light" onclick="StartOCR()">开始</a></div>-->
             <div class="span2" id="btnStartOCR"><input type="submit" value="上传" class="btn btn-large btn-green-light"></div>
-            <div class="span2" id="btnCancel"><a class="btn btn-large btn-green-light" onclick="Clear()">重置</a></div>
+            <div class="span2" id="btnCancel"><input class="btn btn-large btn-green-light" onclick="Clear()" value="重置"></div>
           </div>
 
           <div style=" clear:both; margin-top:10px !important;"></div>
@@ -60,7 +60,7 @@
                 <h3>图片预览</h3>
               </div>
               <div class="panel-body">
-                <img id="previewImage" class="img-responsive" style="float:left; height:80%; width:95%;" th:src="@{${imgpath}}" alt="图片" onerror="this.src='../ocr/pic/loading.gif'">
+                <img id="previewImage" class="img-responsive" style="float:left; height:80%; width:95%;" th:src="@{${imgpath}}">
               </div>
             </div>
 

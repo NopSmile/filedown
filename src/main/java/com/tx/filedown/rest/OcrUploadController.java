@@ -81,9 +81,9 @@ public class OcrUploadController {
                     StringBuffer pdfResult=new StringBuffer();
                     //先切图片在转ocr 在拼接
                     List<String> pngName= pdftopng.pdf2png(filePath,filename,"jpg");
-                    pngName.forEach(a->{
-                        System.out.println(imageurl+a);
-                        //pdfResult.append(ocrMethod.toTurn(imageurl,filename)+"\n");
+                    pngName.forEach(itemName->{
+                        System.out.println(imageurl+itemName);
+                        pdfResult.append(ocrMethod.toTurn(imageurl+itemName)+"\n");
                     });
                     long endpdf = System.currentTimeMillis() - startpdf;
                     System.out.println(pdfResult);

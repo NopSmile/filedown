@@ -79,7 +79,7 @@ public class OcrUploadController {
                     //先切图片在转ocr 在拼接
                     List<String> pngName= pdftopng.pdf2png(filePath,filename,"jpg");
                     pngName.forEach(a->{
-                        System.out.println(a);
+                        System.out.println(imageurl+filename);
                     });
 
                     break;

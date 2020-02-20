@@ -31,6 +31,9 @@ public class OcrUploadController {
         return "index";
     }
 
+    //47.92.107.98 研发环境
+    private static final String imageurl="http://39.105.47.147:52118/pic/";
+
     @PostMapping("/")
     public String uploading(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) throws UnknownHostException {
         ///public MapRestResponse uploading(@RequestParam(value="filePath") String filePath, @RequestParam("file") MultipartFile file,HttpServletRequest request) {
@@ -50,7 +53,7 @@ public class OcrUploadController {
                 Map<String, Object> postparams = new HashMap<String, Object>();
 
                 postparams.put("method", "ocrService");// 固定参数
-                postparams.put("url", "http://39.105.47.147:52118/pic/"+filename);// 图⽚片完整URL，URL⻓长度不不超过1024字节，和img参数只能同时存在⼀一个。PS：如果您需要通过url进⾏行行访问，需要您考虑SSRF攻击的防护。
+                postparams.put("url", imageurl+filename);// 图⽚片完整URL，URL⻓长度不不超过1024字节，和img参数只能同时存在⼀一个。PS：如果您需要通过url进⾏行行访问，需要您考虑SSRF攻击的防护。
                 postparams.put("prob", "true");//是否需要置信度
                 postparams.put("charInfo", "true");//是否需要单字输出
                 postparams.put("rotate", "true");//是否需要⾃自动旋转功能
@@ -76,12 +79,12 @@ public class OcrUploadController {
 
                 model.addAttribute("time","ocr转换耗时: "+end+" ms");
                 model.addAttribute("path",filePath);
-                model.addAttribute("imgpath","http://39.105.47.147:52118/pic/"+filename);
+                model.addAttribute("imgpath",imageurl+filename);
                 model.addAttribute("result",resultPost);
         }else{
             model.addAttribute("time","0 ms");
             model.addAttribute("path",filePath);
-            model.addAttribute("imgpath","http://39.105.47.147:52118/pic/"+filename);
+            model.addAttribute("imgpath",imageurl+filename);
             model.addAttribute("result","没有开启转换ocr 请开启后在测试");
         }
         System.out.println(filePath+filename+InetAddress.getLocalHost());

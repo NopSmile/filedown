@@ -1,5 +1,6 @@
 package com.tx.filedown.rest;
 
+import com.tx.filedown.utils.HttpUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,18 +14,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
-
-import com.tencentcloudapi.common.Credential;
-import com.tencentcloudapi.common.profile.ClientProfile;
-import com.tencentcloudapi.common.profile.HttpProfile;
-import com.tencentcloudapi.common.exception.TencentCloudSDKException;
-
-import com.tencentcloudapi.ocr.v20181119.OcrClient;
-
-import com.tencentcloudapi.ocr.v20181119.models.GeneralBasicOCRRequest;
-import com.tencentcloudapi.ocr.v20181119.models.GeneralBasicOCRResponse;
-
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class OcrUploadController {
@@ -51,32 +42,38 @@ public class OcrUploadController {
         }
         System.out.println("文件名 "+file.getOriginalFilename()+" 文件上传 "+filePath+" 成功!");
         if(1==ocr){
-            try{
+                Map<String, Object> headers = new HashMap<String, Object>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
 
-                Credential cred = new Credential("AKIDNbdS3QOWFnYEh258sSt9HCuPhleJt6B3", "rV3SecNvGOI0iHdmhPt9Tkw4871rZ9cx");
+                Map<String, Object> postparams = new HashMap<String, Object>();
 
-                HttpProfile httpProfile = new HttpProfile();
-                httpProfile.setEndpoint("ocr.tencentcloudapi.com");
+                postparams.put("method", "ocrService");// 固定参数
+                postparams.put("url", "http://39.105.47.147:52118/pic/"+file.getOriginalFilename());// 图⽚片完整URL，URL⻓长度不不超过1024字节，和img参数只能同时存在⼀一个。PS：如果您需要通过url进⾏行行访问，需要您考虑SSRF攻击的防护。
+                postparams.put("prob", "true");//是否需要置信度
+                postparams.put("charInfo", "true");//是否需要单字输出
+                postparams.put("rotate", "true");//是否需要⾃自动旋转功能
 
-                ClientProfile clientProfile = new ClientProfile();
-                clientProfile.setHttpProfile(httpProfile);
+                /**
+                 * page: 是否需要分⻚页功能
+                 * paragraph: 是否需要分段功能
+                 * row: 是否需要分⾏行行功能
+                 * removeBoundary: 是否需要去除边界(对于包含多⻚页的图⽚片，去除边界的⻚页内容)
+                 * noStamp: 是否去印章
+                 * lowerP: 是否返回低识别率的字，如⼿手写体
+                 * layout:版⾯面格式相关信息，⽬目前包含标题提取
+                 * figure:是否需要图案（指纹和印章）坐标输出
+                 * type:要识别的图⽚片类型，括号内表示需要传⼊入的参数值，包括⽂文档识
+                 */
 
-                OcrClient client = new OcrClient(cred, "ap-beijing", clientProfile);
+                String resultPost = HttpUtil.httpPost("http://47.92.239.98:80/ocrapidocker/ocrservice.json", headers, null,
+                        postparams, 60000, false);
 
-                String params = "{\"ImageUrl\":\"http://39.105.47.147:52111/ocrdata/"+file.getOriginalFilename()+"\"}";
-                GeneralBasicOCRRequest req = GeneralBasicOCRRequest.fromJsonString(params, GeneralBasicOCRRequest.class);
-
-                GeneralBasicOCRResponse resp = client.GeneralBasicOCR(req);
-
-                System.out.println(GeneralBasicOCRRequest.toJsonString(resp));
+                System.out.println(resultPost);
 
                 model.addAttribute("fileName",file.getOriginalFilename());
                 model.addAttribute("path",filePath);
                 model.addAttribute("imgpath","http://39.105.47.147:52118/pic/"+file.getOriginalFilename());
-                model.addAttribute("result",GeneralBasicOCRRequest.toJsonString(resp));
-            } catch (TencentCloudSDKException e) {
-                System.out.println(e.toString());
-            }
+                model.addAttribute("result",resultPost);
         }else{
             model.addAttribute("fileName",file.getOriginalFilename());
             model.addAttribute("path",filePath);

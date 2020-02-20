@@ -2,6 +2,7 @@ package com.tx.filedown.rest;
 
 import com.tx.filedown.utils.HttpUtil;
 import com.tx.filedown.utils.Readword;
+import com.tx.filedown.utils.ocrMethod;
 import com.tx.filedown.utils.pdftopng;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -76,12 +77,20 @@ public class OcrUploadController {
                     break;
                 case "pdf":
                     System.out.println("pdf");
+                    long startpdf = System.currentTimeMillis();
+                    StringBuffer pdfResult=new StringBuffer();
                     //先切图片在转ocr 在拼接
                     List<String> pngName= pdftopng.pdf2png(filePath,filename,"jpg");
                     pngName.forEach(a->{
-                        System.out.println(imageurl+filename);
+                        System.out.println(imageurl+a);
+                        //pdfResult.append(ocrMethod.toTurn(imageurl,filename)+"\n");
                     });
-
+                    long endpdf = System.currentTimeMillis() - startpdf;
+                    System.out.println(pdfResult);
+                    model.addAttribute("time","文件格式为："+afterType+"的  word转换耗时: "+endpdf+" ms");
+                    model.addAttribute("path",filePath);
+                    model.addAttribute("imgpath",imageurl+filename);
+                    model.addAttribute("result",pdfResult.toString());
                     break;
                 default:
                     System.out.println("图片");

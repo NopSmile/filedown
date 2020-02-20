@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Controller
 public class OcrUploadController {
@@ -81,13 +82,16 @@ public class OcrUploadController {
                     StringBuffer pdfResult=new StringBuffer();
                     //先切图片在转ocr 在拼接
                     List<String> pngName= pdftopng.pdf2png(filePath,filename,"jpg");
+                    AtomicInteger page= new AtomicInteger(1);
                     pngName.forEach(itemName->{
+                        page.getAndIncrement();
                         System.out.println(imageurl+itemName);
                         pdfResult.append(ocrMethod.toTurn(imageurl+itemName)+"\n");
+                        pdfResult.append("\n------------------我是分隔符--------------------");
                     });
                     long endpdf = System.currentTimeMillis() - startpdf;
                     System.out.println(pdfResult);
-                    model.addAttribute("time","文件格式为："+afterType+"的  word转换耗时: "+endpdf+" ms");
+                    model.addAttribute("time","文件格式为："+afterType+"的文件  共切成["+page+"]张图片后转换耗时: "+endpdf+" ms");
                     model.addAttribute("path",filePath);
                     model.addAttribute("imgpath",imageurl+filename);
                     model.addAttribute("result",pdfResult.toString());

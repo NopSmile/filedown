@@ -82,12 +82,12 @@ public class OcrUploadController {
                     StringBuffer pdfResult=new StringBuffer();
                     //先切图片在转ocr 在拼接
                     List<String> pngName= pdftopng.pdf2png(filePath,filename,"jpg");
-                    AtomicInteger page= new AtomicInteger(1);
+                    AtomicInteger page= new AtomicInteger(0);
                     pngName.forEach(itemName->{
                         page.getAndIncrement();
                         System.out.println(imageurl+itemName);
                         pdfResult.append(ocrMethod.toTurn(imageurl+itemName)+"\n");
-                        pdfResult.append("\n------------------我是分隔符--------------------");
+                        pdfResult.append("\n------------------我是分隔符--------------------\n");
                     });
                     long endpdf = System.currentTimeMillis() - startpdf;
                     System.out.println(pdfResult);

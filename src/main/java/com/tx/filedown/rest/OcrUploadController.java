@@ -66,18 +66,20 @@ public class OcrUploadController {
                  * figure:是否需要图案（指纹和印章）坐标输出
                  * type:要识别的图⽚片类型，括号内表示需要传⼊入的参数值，包括⽂文档识
                  */
+            long start = System.currentTimeMillis();
 
-                String resultPost = HttpUtil.httpPost("http://47.92.239.98:80/ocrapidocker/ocrservice.json", headers, null,
+            String resultPost = HttpUtil.httpPost("http://47.92.239.98:80/ocrapidocker/ocrservice.json", headers, null,
                         postparams, 60000, false);
+            long end = System.currentTimeMillis() - start;
 
-                System.out.println(resultPost);
+            System.out.println(resultPost);
 
-                model.addAttribute("fileName",filename);
+                model.addAttribute("time","ocr转换耗时: "+end+" ms");
                 model.addAttribute("path",filePath);
                 model.addAttribute("imgpath","http://39.105.47.147:52118/pic/"+filename);
                 model.addAttribute("result",resultPost);
         }else{
-            model.addAttribute("fileName",filename);
+            model.addAttribute("time","0 ms");
             model.addAttribute("path",filePath);
             model.addAttribute("imgpath","http://39.105.47.147:52118/pic/"+filename);
             model.addAttribute("result","没有开启转换ocr 请开启后在测试");

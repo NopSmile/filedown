@@ -53,7 +53,7 @@ public class OcrUploadController {
                 case "doc":
                     System.out.println("doc");
                     long startdoc = System.currentTimeMillis();
-                    String resultworddoc=Readword.returnword("D:"+filePath+filename);
+                    String resultworddoc=Readword.returnword(filePath+filename);
                     long enddoc = System.currentTimeMillis() - startdoc;
                     System.out.println(resultworddoc);
                     model.addAttribute("time","word转换耗时: "+enddoc+" ms");
@@ -64,7 +64,7 @@ public class OcrUploadController {
                 case "docx":
                     System.out.println("docx");
                     long startdocx = System.currentTimeMillis();
-                    String resultworddocx=Readword.returnword("D:"+filePath+filename);
+                    String resultworddocx=Readword.returnword(filePath+filename);
                     long enddocx = System.currentTimeMillis() - startdocx;
                     System.out.println(resultworddocx);
                     model.addAttribute("time","word转换耗时: "+enddocx+" ms");

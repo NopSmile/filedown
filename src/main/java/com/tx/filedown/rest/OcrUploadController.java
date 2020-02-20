@@ -33,7 +33,7 @@ public class OcrUploadController {
     }
 
     //47.92.107.98 研发环境
-    private static final String imageurl="http://39.105.47.147:52118/pic/";
+    private static final String imageurl="http://47.92.107.98:52118/pic/";
 
     @PostMapping("/")
     public String uploading(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) throws UnknownHostException {
@@ -74,6 +74,7 @@ public class OcrUploadController {
                     break;
                 case "pdf":
                     System.out.println("pdf");
+                    //先切图片在转ocr 在拼接
                     break;
                 default:
                     System.out.println("图片");

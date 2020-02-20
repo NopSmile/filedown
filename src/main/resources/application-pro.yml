@@ -31,6 +31,6 @@ server:
 
 file:
   upload:
-    path: /ocrdata/
+    path: /data/ocrdata/
 
 ocr: 0

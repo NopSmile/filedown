@@ -29,7 +29,7 @@ public class pdftopng {
                 BufferedImage image = renderer.renderImageWithDPI(i, 144); // Windows native DPI
                 // BufferedImage srcImage = resize(image, 240, 240);//产生缩略图
                 ImageIO.write(image, type, new File(fileAddress+filename+"_"+(i+1)+"."+type));
-                pngName.add(fileAddress+filename+"_"+(i+1)+"."+type);
+                pngName.add(filename+"_"+(i+1)+"."+type);
             }
             return pngName;
         } catch (IOException e) {
@@ -59,7 +59,7 @@ public class pdftopng {
                 BufferedImage image = renderer.renderImageWithDPI(i, 144); // Windows native DPI
                 // BufferedImage srcImage = resize(image, 240, 240);//产生缩略图
                 ImageIO.write(image, type, new File(fileAddress+filename+"_"+(i+1)+"."+type));
-                pngName.add(fileAddress+filename+"_"+(i+1)+"."+type);
+                pngName.add(filename+"_"+(i+1)+"."+type);
             }
             return pngName;
         } catch (IOException e) {

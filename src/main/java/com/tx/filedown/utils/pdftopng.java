@@ -20,7 +20,7 @@ public class pdftopng {
     public static List<String> pdf2png(String fileAddress,String filename,String type) {
         // 将pdf装图片 并且自定义图片得格式大小
         List<String> pngName=new ArrayList<String>();
-        File file = new File(fileAddress+"\\"+filename);
+        File file = new File(fileAddress+filename);
         try {
             PDDocument doc = PDDocument.load(file);
             PDFRenderer renderer = new PDFRenderer(doc);
@@ -28,8 +28,8 @@ public class pdftopng {
             for (int i = 0; i < pageCount; i++) {
                 BufferedImage image = renderer.renderImageWithDPI(i, 144); // Windows native DPI
                 // BufferedImage srcImage = resize(image, 240, 240);//产生缩略图
-                ImageIO.write(image, type, new File(fileAddress+"\\"+filename+"_"+(i+1)+"."+type));
-                pngName.add(fileAddress+"\\"+filename+"_"+(i+1)+"."+type);
+                ImageIO.write(image, type, new File(fileAddress+filename+"_"+(i+1)+"."+type));
+                pngName.add(fileAddress+filename+"_"+(i+1)+"."+type);
             }
             return pngName;
         } catch (IOException e) {
@@ -49,7 +49,7 @@ public class pdftopng {
      */
     public static List<String> pdf2png(String fileAddress,String filename,int indexOfStart,int indexOfEnd,String type) {
         // 将pdf装图片 并且自定义图片得格式大小
-        File file = new File(fileAddress+"\\"+filename);
+        File file = new File(fileAddress+filename);
         List<String> pngName=new ArrayList<String>();
         try {
             PDDocument doc = PDDocument.load(file);
@@ -58,8 +58,8 @@ public class pdftopng {
             for (int i = indexOfStart; i < indexOfEnd; i++) {
                 BufferedImage image = renderer.renderImageWithDPI(i, 144); // Windows native DPI
                 // BufferedImage srcImage = resize(image, 240, 240);//产生缩略图
-                ImageIO.write(image, type, new File(fileAddress+"\\"+filename+"_"+(i+1)+"."+type));
-                pngName.add(fileAddress+"\\"+filename+"_"+(i+1)+"."+type);
+                ImageIO.write(image, type, new File(fileAddress+filename+"_"+(i+1)+"."+type));
+                pngName.add(fileAddress+filename+"_"+(i+1)+"."+type);
             }
             return pngName;
         } catch (IOException e) {

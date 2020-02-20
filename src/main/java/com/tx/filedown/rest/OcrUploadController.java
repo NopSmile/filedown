@@ -1,6 +1,7 @@
 package com.tx.filedown.rest;
 
 import com.tx.filedown.utils.HttpUtil;
+import com.tx.filedown.utils.Readword;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,8 +37,9 @@ public class OcrUploadController {
 
     @PostMapping("/")
     public String uploading(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) throws UnknownHostException {
-        ///public MapRestResponse uploading(@RequestParam(value="filePath") String filePath, @RequestParam("file") MultipartFile file,HttpServletRequest request) {
+
         String filename=UUID.randomUUID().toString().replaceAll("-","")+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."),file.getOriginalFilename().length());
+        String afterType=file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1,file.getOriginalFilename().length());
         try {
                 uploadFile(file.getBytes(), filePath, filename);
         } catch (Exception e) {
@@ -47,40 +49,67 @@ public class OcrUploadController {
         }
         System.out.println("文件名 "+filename+" 文件上传 "+filePath+" 成功!");
         if(1==ocr){
-                Map<String, Object> headers = new HashMap<String, Object>();
-                headers.put("Content-Type", "application/x-www-form-urlencoded");
+            switch (afterType) {
+                case "doc":
+                    System.out.println("doc");
+                    long startdoc = System.currentTimeMillis();
+                    String resultworddoc=Readword.returnword("D:"+filePath+filename);
+                    long enddoc = System.currentTimeMillis() - startdoc;
+                    System.out.println(resultworddoc);
+                    model.addAttribute("time","word转换耗时: "+enddoc+" ms");
+                    model.addAttribute("path",filePath);
+                    model.addAttribute("imgpath",imageurl+filename);
+                    model.addAttribute("result",resultworddoc);
+                    break;
+                case "docx":
+                    System.out.println("docx");
+                    long startdocx = System.currentTimeMillis();
+                    String resultworddocx=Readword.returnword("D:"+filePath+filename);
+                    long enddocx = System.currentTimeMillis() - startdocx;
+                    System.out.println(resultworddocx);
+                    model.addAttribute("time","word转换耗时: "+enddocx+" ms");
+                    model.addAttribute("path",filePath);
+                    model.addAttribute("imgpath",imageurl+filename);
+                    model.addAttribute("result",resultworddocx);
+                    break;
+                case "pdf":
+                    System.out.println("pdf");
+                    break;
+                default:
+                    System.out.println("图片");
+                    Map<String, Object> headers = new HashMap<String, Object>();
+                    headers.put("Content-Type", "application/x-www-form-urlencoded");
+                    Map<String, Object> postparams = new HashMap<String, Object>();
+                    postparams.put("method", "ocrService");// 固定参数
+                    postparams.put("url", imageurl+filename);// 图⽚片完整URL，URL⻓长度不不超过1024字节，和img参数只能同时存在⼀一个。PS：如果您需要通过url进⾏行行访问，需要您考虑SSRF攻击的防护。
+                    //postparams.put("prob", "true");//是否需要置信度
+                    //postparams.put("charInfo", "true");//是否需要单字输出
+                    postparams.put("rotate", "true");//是否需要⾃自动旋转功能
+                    /**
+                     * page: 是否需要分⻚页功能
+                     * paragraph: 是否需要分段功能
+                     * row: 是否需要分⾏行行功能
+                     * removeBoundary: 是否需要去除边界(对于包含多⻚页的图⽚片，去除边界的⻚页内容)
+                     * noStamp: 是否去印章
+                     * lowerP: 是否返回低识别率的字，如⼿手写体
+                     * layout:版⾯面格式相关信息，⽬目前包含标题提取
+                     * figure:是否需要图案（指纹和印章）坐标输出
+                     * type:要识别的图⽚片类型，括号内表示需要传⼊入的参数值，包括⽂文档识
+                     */
+                    long startw = System.currentTimeMillis();
 
-                Map<String, Object> postparams = new HashMap<String, Object>();
+                    String resultPost = HttpUtil.httpPost("http://47.92.239.98:80/ocrapidocker/ocrservice.json", headers, null,
+                            postparams, 60000, false);
+                    long endw = System.currentTimeMillis() - startw;
 
-                postparams.put("method", "ocrService");// 固定参数
-                postparams.put("url", imageurl+filename);// 图⽚片完整URL，URL⻓长度不不超过1024字节，和img参数只能同时存在⼀一个。PS：如果您需要通过url进⾏行行访问，需要您考虑SSRF攻击的防护。
-                postparams.put("prob", "true");//是否需要置信度
-                postparams.put("charInfo", "true");//是否需要单字输出
-                postparams.put("rotate", "true");//是否需要⾃自动旋转功能
+                    System.out.println(resultPost);
 
-                /**
-                 * page: 是否需要分⻚页功能
-                 * paragraph: 是否需要分段功能
-                 * row: 是否需要分⾏行行功能
-                 * removeBoundary: 是否需要去除边界(对于包含多⻚页的图⽚片，去除边界的⻚页内容)
-                 * noStamp: 是否去印章
-                 * lowerP: 是否返回低识别率的字，如⼿手写体
-                 * layout:版⾯面格式相关信息，⽬目前包含标题提取
-                 * figure:是否需要图案（指纹和印章）坐标输出
-                 * type:要识别的图⽚片类型，括号内表示需要传⼊入的参数值，包括⽂文档识
-                 */
-            long start = System.currentTimeMillis();
-
-            String resultPost = HttpUtil.httpPost("http://47.92.239.98:80/ocrapidocker/ocrservice.json", headers, null,
-                        postparams, 60000, false);
-            long end = System.currentTimeMillis() - start;
-
-            System.out.println(resultPost);
-
-                model.addAttribute("time","ocr转换耗时: "+end+" ms");
-                model.addAttribute("path",filePath);
-                model.addAttribute("imgpath",imageurl+filename);
-                model.addAttribute("result",resultPost);
+                    model.addAttribute("time","ocr转换耗时: "+endw+" ms");
+                    model.addAttribute("path",filePath);
+                    model.addAttribute("imgpath",imageurl+filename);
+                    model.addAttribute("result",resultPost);
+                    break;
+            }
         }else{
             model.addAttribute("time","0 ms");
             model.addAttribute("path",filePath);

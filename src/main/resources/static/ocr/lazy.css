@@ -66,7 +66,7 @@ h6 {
 }
 
 .span2 {
-	width: 140px;
+	width: 180px;
 	margin-left: 18px;
 }
 
@@ -76,12 +76,12 @@ h6 {
 }
 
 .span4 {
-	width: 300px;
+	width: 400px;
 	margin-left: 20px;
 }
 
 .span5 {
-	width: 380px;
+	width: 660px;
 	margin-left: 20px;
 }
 
@@ -96,7 +96,7 @@ h6 {
 }
 
 .span8 {
-	width: 620px;
+	width: 820px;
 	margin-left: 20px;
 }
 
@@ -116,7 +116,7 @@ h6 {
 }
 
 .span12 {
-	width: 940px;
+	width: 1366px;
 	margin-left: 0;
 }
 .span1:first-child,.span2:first-child,.span3:first-child,.span4:first-child,.span5:first-child,.span6:first-child,.span7:first-child,.span8:first-child,.span9:first-child,.span10:first-child,.span11:first-child,.span12:first-child {
@@ -178,7 +178,7 @@ h6 {
 }
 .row {
 	position: relative;
-	width: 940px;
+	width: 1366px;
 	margin: 0 auto;
 }
 
@@ -417,8 +417,8 @@ input.span1,textarea.span1,select.span1,input.span2,textarea.span2,select.span2,
 .process-builder ul {
 	list-style: none
 }<!--process-builder ul li.color-shade-1:before {
-	color: #62d4d8!important;
-}
+		 color: #62d4d8!important;
+	 }
 
 .process-builder ul li.color-shade-2:before {
 	color: #14958d!important;
@@ -441,11 +441,11 @@ input.span1,textarea.span1,select.span1,input.span2,textarea.span2,select.span2,
 }
 
 -->.process-builder ul li {
-	position: relative;
-	float: left;
-	width: 25%;
-	text-align: center;
-}
+	   position: relative;
+	   float: left;
+	   width: 25%;
+	   text-align: center;
+   }
 
 .process-builder ul li.color-shade-1:after {
 	border-bottom-color: #96e0a9!important;
@@ -586,6 +586,7 @@ input.span1,textarea.span1,select.span1,input.span2,textarea.span2,select.span2,
 }
 #ocrForm .diyLabel {
 	font-size: 16px;
+	margin-left: 120px;
 }
 .diyItem {
 	height: 51px;
@@ -849,12 +850,12 @@ ol {
 }
 .copyright {
 	width: 100%;
-  text-align: center;
+	text-align: center;
 }
 .copyright p {
 	font-size: 10px;
-  color: #b5b5b5;
-  margin: 0 0 10px;
+	color: #b5b5b5;
+	margin: 0 0 10px;
 }
 #mobile-menu-trigger {
 	float: right;
@@ -958,11 +959,11 @@ ol {
 }
 .wapEnter {
 	padding: 5px 12px;
-  color: #c7254e;
-  background-color: #f9f2f4;
-  border-radius: 4px;
-  margin-top: 5.5px;
-  cursor: pointer;
+	color: #c7254e;
+	background-color: #f9f2f4;
+	border-radius: 4px;
+	margin-top: 5.5px;
+	cursor: pointer;
 }
 #showWapMes {
 	width: 100%;
@@ -984,7 +985,7 @@ ol {
 .wapMesContainer p {
 	font-size: 18px;
 	margin-bottom: 20px;
-  color: #08ab89;
+	color: #08ab89;
 }
 .faqWraper p, .faqWraper li{
 	padding: 10px;

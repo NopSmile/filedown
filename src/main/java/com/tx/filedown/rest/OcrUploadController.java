@@ -56,7 +56,7 @@ public class OcrUploadController {
                     String resultworddoc=Readword.returnword(filePath+filename);
                     long enddoc = System.currentTimeMillis() - startdoc;
                     System.out.println(resultworddoc);
-                    model.addAttribute("time","word转换耗时: "+enddoc+" ms");
+                    model.addAttribute("time","文件格式为："+afterType+"的  word转换耗时: "+enddoc+" ms");
                     model.addAttribute("path",filePath);
                     model.addAttribute("imgpath",imageurl+filename);
                     model.addAttribute("result",resultworddoc);
@@ -67,7 +67,7 @@ public class OcrUploadController {
                     String resultworddocx=Readword.returnword(filePath+filename);
                     long enddocx = System.currentTimeMillis() - startdocx;
                     System.out.println(resultworddocx);
-                    model.addAttribute("time","word转换耗时: "+enddocx+" ms");
+                    model.addAttribute("time","文件格式为："+afterType+"的  word转换耗时: "+enddocx+" ms");
                     model.addAttribute("path",filePath);
                     model.addAttribute("imgpath",imageurl+filename);
                     model.addAttribute("result",resultworddocx);
@@ -105,7 +105,7 @@ public class OcrUploadController {
 
                     System.out.println(resultPost);
 
-                    model.addAttribute("time","ocr转换耗时: "+endw+" ms");
+                    model.addAttribute("time","文件格式为："+afterType+"的 图片转换耗时: "+endw+" ms");
                     model.addAttribute("path",filePath);
                     model.addAttribute("imgpath",imageurl+filename);
                     model.addAttribute("result",resultPost);

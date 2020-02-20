@@ -16,6 +16,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class OcrUploadController {
@@ -33,14 +34,15 @@ public class OcrUploadController {
     @PostMapping("/")
     public String uploading(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) throws UnknownHostException {
         ///public MapRestResponse uploading(@RequestParam(value="filePath") String filePath, @RequestParam("file") MultipartFile file,HttpServletRequest request) {
+        String filename=UUID.randomUUID().toString().replaceAll("-","")+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."),file.getOriginalFilename().length());
         try {
-                uploadFile(file.getBytes(), filePath, file.getOriginalFilename());
+                uploadFile(file.getBytes(), filePath, filename);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("文件上传失败!");
             return "redirect:/";
         }
-        System.out.println("文件名 "+file.getOriginalFilename()+" 文件上传 "+filePath+" 成功!");
+        System.out.println("文件名 "+filename+" 文件上传 "+filePath+" 成功!");
         if(1==ocr){
                 Map<String, Object> headers = new HashMap<String, Object>();
                 headers.put("Content-Type", "application/x-www-form-urlencoded");
@@ -48,7 +50,7 @@ public class OcrUploadController {
                 Map<String, Object> postparams = new HashMap<String, Object>();
 
                 postparams.put("method", "ocrService");// 固定参数
-                postparams.put("url", "http://39.105.47.147:52118/pic/"+file.getOriginalFilename());// 图⽚片完整URL，URL⻓长度不不超过1024字节，和img参数只能同时存在⼀一个。PS：如果您需要通过url进⾏行行访问，需要您考虑SSRF攻击的防护。
+                postparams.put("url", "http://39.105.47.147:52118/pic/"+filename);// 图⽚片完整URL，URL⻓长度不不超过1024字节，和img参数只能同时存在⼀一个。PS：如果您需要通过url进⾏行行访问，需要您考虑SSRF攻击的防护。
                 postparams.put("prob", "true");//是否需要置信度
                 postparams.put("charInfo", "true");//是否需要单字输出
                 postparams.put("rotate", "true");//是否需要⾃自动旋转功能
@@ -70,17 +72,17 @@ public class OcrUploadController {
 
                 System.out.println(resultPost);
 
-                model.addAttribute("fileName",file.getOriginalFilename());
+                model.addAttribute("fileName",filename);
                 model.addAttribute("path",filePath);
-                model.addAttribute("imgpath","http://39.105.47.147:52118/pic/"+file.getOriginalFilename());
+                model.addAttribute("imgpath","http://39.105.47.147:52118/pic/"+filename);
                 model.addAttribute("result",resultPost);
         }else{
-            model.addAttribute("fileName",file.getOriginalFilename());
+            model.addAttribute("fileName",filename);
             model.addAttribute("path",filePath);
-            model.addAttribute("imgpath","http://39.105.47.147:52118/pic/"+file.getOriginalFilename());
+            model.addAttribute("imgpath","http://39.105.47.147:52118/pic/"+filename);
             model.addAttribute("result","没有开启转换ocr 请开启后在测试");
         }
-        System.out.println(filePath+file.getOriginalFilename()+InetAddress.getLocalHost());
+        System.out.println(filePath+filename+InetAddress.getLocalHost());
         return "index";
     }
 

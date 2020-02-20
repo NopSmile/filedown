@@ -2,6 +2,7 @@ package com.tx.filedown.rest;
 
 import com.tx.filedown.utils.HttpUtil;
 import com.tx.filedown.utils.Readword;
+import com.tx.filedown.utils.pdftopng;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import java.io.FileOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -75,6 +77,11 @@ public class OcrUploadController {
                 case "pdf":
                     System.out.println("pdf");
                     //先切图片在转ocr 在拼接
+                    List<String> pngName= pdftopng.pdf2png(filePath,filename,"jpg");
+                    pngName.forEach(a->{
+                        System.out.println(a);
+                    });
+
                     break;
                 default:
                     System.out.println("图片");

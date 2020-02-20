@@ -1,6 +1,8 @@
 package com.tx.filedown.utils;
 
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +30,9 @@ public class ocrMethod {
          */
         String resultPost = HttpUtil.httpPost("http://47.92.239.98:80/ocrapidocker/ocrservice.json", headers, null, postparams, 60000, false);
         System.out.println(resultPost);
+        if( 200 == JSONObject.parseObject(resultPost).getInteger("code")){
+            resultPost=JSONObject.parseObject(resultPost).getJSONObject("data").getString("content");
+        }
         return resultPost;
     }
 

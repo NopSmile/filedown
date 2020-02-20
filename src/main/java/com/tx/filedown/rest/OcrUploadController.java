@@ -1,5 +1,6 @@
 package com.tx.filedown.rest;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tx.filedown.utils.HttpUtil;
 import com.tx.filedown.utils.Readword;
 import com.tx.filedown.utils.ocrMethod;
@@ -86,7 +87,7 @@ public class OcrUploadController {
                     pngName.forEach(itemName->{
                         page.getAndIncrement();
                         System.out.println(imageurl+itemName);
-                        pdfResult.append(ocrMethod.toTurn(imageurl+itemName)+"\n");
+                        pdfResult.append(ocrMethod.toTurn(imageurl+itemName));
                         pdfResult.append("\n------------------我是分隔符--------------------\n");
                     });
                     long endpdf = System.currentTimeMillis() - startpdf;
@@ -124,7 +125,9 @@ public class OcrUploadController {
                     long endw = System.currentTimeMillis() - startw;
 
                     System.out.println(resultPost);
-
+                    if( 200 == JSONObject.parseObject(resultPost).getInteger("code")){
+                        resultPost=JSONObject.parseObject(resultPost).getJSONObject("data").getString("content");
+                    }
                     model.addAttribute("time","文件格式为："+afterType+"的 图片转换耗时: "+endw+" ms");
                     model.addAttribute("path",filePath);
                     model.addAttribute("imgpath",imageurl+filename);

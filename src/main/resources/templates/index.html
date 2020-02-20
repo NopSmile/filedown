@@ -6,8 +6,13 @@
     <script type="text/javascript">
         function Clear(){
             document.getElementById("imageFile").value="";
-            document.getElementById("imageFile").value="";
-            document.getElementById("imageFile").value="";
+        }
+        function check() {
+            if(document.getElementById("imageFile").value==""){
+                alert("你没有选择文件");
+                return false;
+            }
+            return true;
         }
     </script>
 </head>
@@ -19,7 +24,7 @@
 					</h1>
 					</div>
 				</div>
-		<form action="../" class="form-horizontal" enctype="multipart/form-data" id="ocrForm" method="post" novalidate="novalidate">
+		<form action="../" class="form-horizontal" enctype="multipart/form-data" id="ocrForm" method="post" novalidate="novalidate" onsubmit="return check()">
 			<!--<input name="__RequestVerificationToken" type="hidden" value="unknown">-->
 			<fieldset>
         <div class="row">

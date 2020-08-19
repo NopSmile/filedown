@@ -28,6 +28,11 @@ spring:
 
 server:
   port: 52118
+  ssl:
+    protocol: TLS
+    key-store: classpath:javastack.keystore
+    key-store-password: javastack
+    key-store-type: JKS
 
 file:
   upload:

@@ -10,5 +10,8 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //外部访问路径映射到本地磁盘路径
         registry.addResourceHandler("/pic/**").addResourceLocations("file:/data/ocrdata/");
+
+
+        registry.addResourceHandler("/asr/**").addResourceLocations("file:/data/asrdata/");
     }
 }

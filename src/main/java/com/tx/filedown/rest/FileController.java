@@ -21,7 +21,7 @@ public class FileController {
     @PostMapping("/uploading")
     public @ResponseBody String uploading(@RequestParam(value="filePath") String filePath,@RequestParam("file") MultipartFile file,
                                           HttpServletRequest request) {
-        System.out.println("filePath--->"+filePath);
+        System.out.println("filePath--->"+filePath+" 文件名字:"+file.getOriginalFilename()+" 文件大小为:"+file.getSize()/1000+"kb");
         try {
             if(new File(filePath+file.getOriginalFilename()).exists()){
                 return "file exists,uploading success";
